@@ -27,6 +27,27 @@
 <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // run after all scripts (put this right after plugins.js / main.js)
+  (function($){
+    $(window).on('load', function(){
+      // Hide any visible modal and remove backdrops
+      $('.modal').each(function(){
+        $(this).removeClass('show').css('display','none').attr('aria-hidden','true');
+      });
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+      
+      // Ensure bootstrap modal state is closed
+      $('.modal').modal('hide');
+
+      // If URL includes a modal id hash (e.g. #project1Modal), remove it so it doesn't reopen
+      if (location.hash && $(location.hash).hasClass('modal')) {
+        history.replaceState(null, null, location.pathname + location.search);
+      }
+    });
+  })(jQuery);
+</script>
 </head>
 
 <body id="top">
